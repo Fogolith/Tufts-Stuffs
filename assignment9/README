@@ -1,0 +1,16 @@
+Sophia Panuthos and Jake Austin
+
+We would like to thank Bach, Tony, Will and James for helping us and providing
+moral support as we debugged our assembly code. Callmain was in the wrong 
+seection and misled us for days, but we sorted it out with their guidance. 
+
+To our knowledge, all components of the RPN calculator have been implemented
+correctly. We have made no departures from calling conventions, other than in
+select functions where we temporarily use a register but preserve and restore
+its value. We implemented the print module as a recursive modulus operation 
+that printed the input value by it's tens digit and then reduced the value in 
+order to print preceding digits.
+
+We spent approximately 3 hours discussing and analyzing the problems in the 
+assignment, 8 hours writing assembly code and 12 hours debugging the 
+calculator. 

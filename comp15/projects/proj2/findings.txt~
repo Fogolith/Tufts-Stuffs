@@ -1,0 +1,9 @@
+Jake Austin
+Project 2 Findings
+
+Because some non-terminals may genererate themselves (Noun Adj Noun or NP Prep
+ NP), probability dictates that every so often a very long sentence will be 
+generated based on which rules are chosen, considering that rules are selected
+at random. If NP produces "Prep NP" several times and then produces "Det Noun",
+and Noun produces "Adj Noun" multiple times, a sentence with multiple 
+prepositions, adjectives and nouns may be created. 

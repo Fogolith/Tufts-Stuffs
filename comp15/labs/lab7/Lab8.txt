@@ -1,0 +1,93 @@
+Lab 8 to-dos and things to watch out for:
+
+****
+1. 
+Add a parent* to your Nodes and determine how to handle insert and remove to account 
+for it (if you've done remove.  If not, you'll do it in a minute).
+****
+
+
+****
+2. 
+Add these methods to your class, but adjust the syntax for your implementation.  You've 
+seen and done them before, so there's no need to spend time on them today.
+
+//public
+void BST::print(){
+  printDepths(root, 0);
+}
+
+//private
+// prints the tree in inOrderTraversal with the depth of each Node shown
+void BST::printDepths(Node* currentLocation, int levelsDown){
+  if(currentLocation == NULL)
+    return;
+  
+  printDepths(currentLocation->left, levelsDown + 1);
+  for(int i = 0; i < levelsDown; ++i)
+    cout << "-";
+  cout << currentLocation->value.Name() << endl;  
+  printDepths(currentLocation->right, levelsDown + 1);
+}
+
+//public
+int BST::height() const{
+  return height(root);
+}
+
+//private
+int BST::height(Node* currentLocation) const{
+	if(currentLocation == NULL)
+		return 0;
+		
+	int left = height(currentLocation->left);
+	int right = height(currentLocation->right);
+	if(left >= right)
+		return (1 + left);
+	return (1 + right);
+}
+****
+
+
+****
+3. 
+Implement remove.  Account for the parent*.  Possibilities:
+a. Node has no children - easy.
+b. Node has one child - easy.
+c. Node has two children - not as easy.  Swap the value of the Node to be deleted with 
+the value of the largest Node in it's left subtree.  Then, call remove on???
+****
+
+****
+4. 
+Turning your tree into an AVL.  Or, calling a method that checks for balance at each
+insert.  
+a. after each insert, you'll call this:
+checkForNeededRotations(currentLocation->parent);
+this is why you added parent pointers.  You'll walk up until you reach NULL, rebalancing
+the tree as you go, if needed.
+b. at each step, ask if the difference between the two subtree heights is 2
+ If left == +2, check if location->left->right is != NULL.  
+  yes? call rotateLeftTwice(currentLocation);
+
+void BST::rotateLeftTwice(Node*& currentLocation){
+  rotateRightOnce(toRotate->left);
+  rotateLeftOnce(toRotate);
+}
+
+  no? call rotateLeftOnce(currentLocation); - you'll have to write that.
+  (Don't forget about the parent*)
+ 
+ If right is +2, check if location->value->left != NULL.
+   yes? call rotateRightTwice(currentLocation);
+   
+void BST::rotateRightTwice(Node*& toRotate){
+  rotateLeftOnce(toRotate->right);
+  rotateRightOnce(toRotate);
+}
+
+no? call rotateRightOnce(currentLocation); - you'll have to write this, too.
+****
+
+
+

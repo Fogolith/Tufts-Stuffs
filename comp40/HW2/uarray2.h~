@@ -1,0 +1,34 @@
+/* Header file for U_Array2 interface
+ */
+#include "uarray.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
+#ifndef UARRAY2_INCLUDED
+#define UARRAY2_INCLUDED
+
+#define T UArray_2
+typedef struct T *T;
+
+struct UArray_2 {
+        int height;
+        int width;
+        int size;
+        UArray_T array;
+};
+
+extern UArray_T UArray2_array(UArray_2 uarray2);
+extern T        UArray2_new(int height, int width, int size);
+extern void     UArray2_free(T *uarray2);
+extern int      UArray2_height(T uarray2);
+extern int      UArray2_width(T uarray2);
+extern int      UArray2_size(T uarray2);
+extern void    *UArray2_at(T uarray2, int row, int column);
+extern void     map_col_major(T uarray2, void apply(T uarray2, int row, 
+                              int column, void *cl), void *cl);
+extern void     map_row_major(T uarray2, void apply(T uarray2, int row, 
+                              int column, void *cl), void *cl);
+
+#undef T
+#endif

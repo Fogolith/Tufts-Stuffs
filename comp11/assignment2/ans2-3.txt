@@ -1,0 +1,1 @@
+I was correct in predicting that the program "AM FRFRRRM. M" creates an infinite loop in the tractor simulator. A staircase propogates forward one move, right one move, and turns left before repeating itself until the simulator's display is full.

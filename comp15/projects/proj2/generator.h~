@@ -1,0 +1,19 @@
+#include "production.h"
+
+class generator
+{
+private:
+    vector<production> grammar;//will be private
+
+public:
+//constructor
+    generator();
+//load in grammar
+    void load(string fname);
+//generate a random sentence from grammar 
+    string gen(string s);
+//string to give as highest level grammar
+    string sentence;
+
+    
+};

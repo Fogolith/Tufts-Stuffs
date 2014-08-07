@@ -1,0 +1,24 @@
+// 
+// queue.cpp
+// Created by Aaron Tietz January 2012
+//
+
+#include <iostream>
+#include "queue.h"
+using namespace std;
+
+/*  COPIED AND COMMENTED OUT HERE FOR EASY REFERENCE
+struct Node{
+  string value;
+  Node* next;
+};
+*/
+
+Queue::Queue(){
+  front = NULL;
+  back = NULL;
+}
+
+//  The rest of the functions go here.  Append and split are an extra challenge, so
+//  wait to work on those until you have the other four methods (i.e. functions) 
+//  tested and working well.

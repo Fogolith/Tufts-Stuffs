@@ -1,0 +1,67 @@
+Jake Austin
+Comp 171, Spring 2014
+Assignment 1
+
+Product: Sleepy Time
+Sleepy time (which can be found on the web at sleepyti.me), is a bedtime / 
+alarm calculator. Given a time to wake up, Sleepy Time will calculate and 
+return several suggested bedtimes based on the average duration of sleep cycles.
+Alternatively, Sleepy Time can calculate and return suggested times for an alarm
+if you are going to bed at the time of inquiery, or with a user generated bed 
+time.
+
+User analysis: A user of this product can be any person with access to the 
+internet. Because of this, it is likely that the age range is skewed towards 
+younger people with no assigned sleeping hours (14-30+). A basic set of 
+technical skills (using drop down menus, typing) would be necessary to operate 
+the product.
+
+Task analysis: A user will want to get suggested times to go to sleep / wake up
+in order to make the best use of their natural sleep cycles. Most people plan 
+sleep around when they are waking up, so users should provide their waking time.Alternatively, users could enter their bed-time for suggested times to wake. 
+The system can use this input (either bed time or wake time) and known data 
+about average time to fall asleep and average duration of sleep cycles to 
+calculate and return the suggested times.
+
+Use: This product could be used daily. It is likely to be used in the home,
+later in the night. As a user prepares for bed and sets their alarm, they can
+consult Sleepy Time for the alarm times that will allign with their sleep
+cycles. 
+
+Conceptual Design: 
+User_time
+start_or_finish
+avg_sleep = 14
+avg_cycle = [90, 180, 270, 360]
+result = [...]
+
+The only variable object is the time entered by the user,and if this is a 
+"start" of "finish" time. The remaining objects are constants, representing the average time it takes to fall asleep (14 min), and the average duration of sleepcycles. Using simple addition and subtraction algorithms, Sleepy Time can use 
+the user input to generate multiple start or finish times representing bed timesor alarms that are in line with natural sleep cycles.
+
+Design Metaphors: Input is either "bed time" or "Morning alarm" time. Return
+values are a list of potential "bed times" or "Morning alarm" times.
+
+Performance: I think that the product is very easy to use and accessible, but
+it does not offer sufficient specificity. The assumed averages may be proper
+times for some users, but it is likely that people vary in their sleep cycles
+and could be more specifically addressed.
+
+Improvements: I believe the most obvious improvement would be to integrate
+Sleepy Time into an alarm application. As it is now, it is an alarm consultant
+and would be better suited if it could suggest, and set, the alarm. Another
+improvement would be to allow for more input fields so users can get more
+personalized alarm times without disrupting the simplicity of the interface 
+granted by using averages. Up-to-date science about sleep cycles could be 
+integrated to improve results. The results page might include a "Personalized
+Results" extension for interested users. If it was coupled with an alarm,
+Sleepy Time would likely be deployed for mobile - though it could continue to
+operate as a web application.
+
+Testing: Expert consulting from a sleep study lab / professional would benefit
+the legitimacy of the product. However, it may be more conclusive to conduct a
+study of Sleepy Time use and measure user satisfaction. Surveys could be used,
+or with sufficient funds we could conduct a lab study of Sleepy Time's
+effectiveness.
+
+  

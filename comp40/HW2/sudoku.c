@@ -1,0 +1,140 @@
+/* sudoku.c
+ * by Zack McGowan and Jake Austin, 02/03/2013
+ * HW2 Part C: Sudoku
+ * Sudoku takes a single pgm file as a command line argument or by standard
+ * input. Sudoke will exit(1) if  
+ * 0) The file is corrupt or not a pgm
+ * 1) The dimensions are not 9 x 9
+ * 2) The intensity denominator is not 9
+ * 3) A well-formatted pgm does not pass Sudoku formatting tests
+ *
+ */
+#include "uarray2.c"
+#include <pnmrdr.h>
+//#include <assert.h>
+
+const int MAX_DIM = 9;
+void process_sudoku(FILE *fp);
+void build(UArray_2 uarray2, int row, int column, void *cl);
+void check(UArray_2 uarray2, int row, int column, void *cl);
+
+int main(int argc, char *argv[]) 
+{
+        if (argc > 2) {
+	    fprintf(stderr, "Invalid Command Line Input");
+        } 
+        else if (argc == 1) {
+	    process_sudoku(stdin);  
+	}
+	else {
+	    FILE *fp = fopen(argv[1], "rb");
+	    process_sudoku(fp); 
+            fclose(fp);
+	}
+	exit(0);
+}
+
+/* process_sudoku takes as an argument a handle to a file. Using Pnmrdr, it
+ * asserts the files pgm format, asserts the file's format data, builds a
+ * 2-dimensional array of ints from the file and checks for proper Sudoku
+ * formatting.
+ */
+void process_sudoku(FILE *fp)
+{
+        if (!fp) {
+	        fprintf(stderr, "Error, could not open file");
+        }
+        Pnmrdr_T rdr = Pnmrdr_new(fp); /*Data type Pnmrdr_T declared*/
+        if (rdr == NULL) {
+	        printf("file NULL");
+                Pnmrdr_free(&rdr);
+                fclose(fp);
+                exit(0);
+        } 
+        Pnmrdr_mapdata map = Pnmrdr_data(rdr);  /*Data type Pnmrdr_mapdata
+						  declared, stores pixel info*/
+        assert(map.width == 9 && map.height == 9);
+	assert(map.denominator == 9);
+        if (map.type != Pnmrdr_gray) {
+	        fprintf(stderr, "File type not graymap\n");
+                Pnmrdr_free(&rdr);
+                fclose(fp);
+	        exit(0);
+        }
+	UArray_2 T = UArray2_new(map.height, map.width, sizeof(int));
+	map_row_major(T, build, rdr);
+        Pnmrdr_free(&rdr);   /* If pixels were left unread or build attempted to
+                                read more pixels than were present in the file,
+                                Pnmrdr will raise Count when freeing. This means
+                                that the file was not 9x9, despite it's labeling
+			      */
+	map_row_major(T, check, NULL);
+        UArray2_free(&T);
+}
+
+/* build is called by map_row_major and with the Pnmrdr_T created for the file.
+ * It asserts the size of an element of UArray_T, and that Pnmrdr_get returns
+ * an integer 1-9. Finally, it stores the integer into the 2d array.
+ */
+void build(UArray_2 uarray2, int row, int column, void *cl) 
+{
+        int *i = UArray2_at(uarray2, row, column);
+        assert(UArray_size(uarray2_array(uarray2)) == sizeof(*i));
+        int read = Pnmrdr_get(cl);
+        assert(read >= 1 && read <= 9);
+        *i = read;
+}
+
+/* check is called by map_row_major and operates on a 9 x 9 UArray_2 which
+ * represents a sudoku puzzle. 
+ *
+ *
+ *
+ */
+void check(UArray_2 uarray2, int row, int column, void *cl)
+{
+        (void) cl;
+        int temp_col = 0;
+        int temp_row = 0;
+        int *temp = NULL;
+        int *curr = UArray2_at(uarray2, row, column);
+//check columns
+        for(int i = (row+1); i < MAX_DIM; i++) {
+                temp = UArray2_at(uarray2, i, column);
+	        if(*curr == *temp) {
+	                exit(1);
+	        }
+	}
+//check rows
+	for(int j = (column + 1); j < MAX_DIM; j++) {
+	        temp = UArray2_at(uarray2, row, j);
+	        if (*curr == *temp) {
+		        exit(1);
+		}
+	}
+//check 3x3 grid
+	for(int k = 0; k < 3; k++) {
+	        if(row % 3 == k) {
+	                temp_row = (row - k);
+	        }
+	        if(column % 3 == k) {
+		        temp_col = (column - k);
+	        }
+	}
+	for(int m = temp_row; m < (temp_row + 3); m++) {
+	        for(int n = temp_col; n < (temp_col + 3); n++) {
+		        if(column == n && row == m){
+		                continue;
+			}
+		        temp = UArray2_at(uarray2, m, n);
+                        if(*curr == *temp){
+		                exit(1);
+			}
+		}
+	}
+}
+
+
+
+
+

@@ -1,0 +1,89 @@
+#include "BST.h"
+
+BST::BST()
+{
+    Node* root=new Node;
+    root->left=NULL;
+    root->right=NULL;
+}
+
+void BST::load(vector<Animal>& a, int num)
+{
+    int count=0;
+    while(count!=num)
+    {
+	for(unsigned int i=0; i<a.size(); i++)
+	{
+	    add(&a[i]);
+	}
+    } 
+}
+
+void BST::inorderPrint()
+{
+    if(root!=NULL);
+        inorderPrint(root);
+}
+
+void BST::inorderPrint(Node* a)
+{
+    Node* temp=a;
+    if(temp->left!=NULL)
+	inorderPrint(temp->left);
+
+    cout << temp->animal->getName() << endl;
+
+    if(temp->right!=NULL)
+	inorderPrint(temp->right);
+
+}
+
+void BST::add(Animal* b)
+{
+    if((root->left==NULL)&&(root->right==NULL))
+    {
+	root->animal=b;
+	cout << "set first" << endl;
+    }
+
+    Node* temp=root;
+    while(temp!=NULL)
+    {
+	if(b==temp->animal)
+	    return;
+
+	else if(b<temp->animal)
+	{
+	     if(temp->left==NULL)
+	     {
+	         temp->left=new Node;
+		 temp->left->animal=b;
+	         break;
+	     }
+	     else
+	     {
+		 temp=temp->left;
+		 continue;
+	     }
+	}
+	else if(b>temp->animal)
+	{
+	    if(temp->right==NULL)
+	    {
+		temp->right=new Node;
+	        temp->right->animal=b;
+	        break;
+	    }
+	    else
+	    {
+		temp=temp->right;
+		continue;
+	    }
+	} 
+	
+    }
+}
+
+
+
+

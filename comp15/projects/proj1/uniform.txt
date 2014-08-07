@@ -1,0 +1,4 @@
+Config 1: average wait 333.735, for express customers 355.4
+Config 2: average wait 2.22549, for express customers 2.72
+Config 3: average wait 59.902, for express customers 0
+Config 4: average wait 1.58824, for express customers 1.6

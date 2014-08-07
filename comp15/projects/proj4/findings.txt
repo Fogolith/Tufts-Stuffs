@@ -1,0 +1,14 @@
+While the loading time for my program may be long (averaging around 9.4 
+minutes), it is only because of how the set up of my structure ensures fast 
+search times. Saving artist, title, lyrics, unique words per song, and the # of
+ occurances and locations of each word in each song makes the search and 
+printing functions near instant -- they don't have to search through any data 
+structures but can go right where they need to quickly. My hashtable has size 
+hardcoded, and after testing numerous times I determined that 60,000 was 
+the ideal number as it reduced the average linked list size in the hashtable to
+under 5. I tried to minimize load time by having many functions run on
+words as the lyrics were read in and saved so that repeated searches through 
+the lyrics were not necessary. I attempted to reduce my load time, but found 
+that the only way to do so was to increase my search time and, while the 
+difference may not be discernable to the user, I like having query times 
+reduced to .0057 seconds. 

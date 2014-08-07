@@ -1,0 +1,16 @@
+Jake Austin
+Comp11 Project 4
+ReadMe
+
+The program consists of 4 headers and 4 cpp files
+
+TrigInfoSTR.h    -- header for struct TrigInfo (no cpp file)
+
+TrigVector.h     -- header and cpp for Trigram Vector class
+TrigVector.cpp
+
+Language.h       -- header and cpp for Language class
+Language.cpp 
+
+Analyzer.h       -- header and cpp for Analyzer class
+Analyzer.cpp

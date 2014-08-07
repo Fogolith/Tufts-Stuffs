@@ -1,0 +1,7 @@
+.section text
+.zero r0
+.temps r6, r7
+start:
+    goto main linking r1
+    halt
+

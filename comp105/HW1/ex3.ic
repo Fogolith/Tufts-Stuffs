@@ -1,0 +1,7 @@
+;Jake Austin
+;HW 1 Ex. 3
+
+(define sigma (m n) (if(= n m) m (+ n (sigma m (- n 1)))))  
+
+;If n = m return m, else add n to result of (sigma m n-1)
+;adds integers from n to m

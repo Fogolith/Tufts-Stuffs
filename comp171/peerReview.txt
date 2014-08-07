@@ -1,0 +1,10 @@
+April, 25 2014
+Jake Austin
+jausti01
+Steven Lessard
+slessa01
+
+For this project, Steve and I met to discuss what changes we should make based
+on the results of the last round of testing. We pair-programmed the updates
+to the original prototype, conducted the usability tests together, and wrote
+our report immediately after.

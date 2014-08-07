@@ -1,0 +1,59 @@
+Jake Austin, 105 Scheme I Thoery questions
+
+30)
+(length (simple-reverse xs)) = (length xs)
+
+Base case: assume that xs is nil
+
+ = {substitute simple-reverse}
+(length (if(null? '()) '() (append(simple-reverse (cdr '())(list1(car '()))))))
+ = {null-empty law}
+(length (if(#t '() (append(simple-reverse(cdr '())(list(car '())))))))
+ = {if-#t law}
+(length '())
+ ===
+(length xs) when xs is null
+
+Inductive step:
+
+(length (simple-reverse xs))    where xs = (cons z zs)
+ = {by assumption that x is not nil}
+(length (simple-reverse (cons z zs)))
+ = {substitute simple-reverse
+(length (if(null? (cons z zs)) '() (append(simple-reverse zs)(list1 z))))
+ = {if-#f law}
+(length (append(simple-reverse zs)(list1 z)))
+ = {length-append law}
+(+ (length (simple-reverse zs))(length (list1 z)))
+ = {length-list1}
+(+ 1 (length(simple-reverse zs)))
+ = {the induction hypothesis}
+(+ 1 (length zs))
+ = {cons-length law}
+(length (cons z zs))
+ ===
+(length xs)
+
+
+37) 
+a)
+p = row
+q = sigma
+
+<e, p, q> || <v, p, q'>
+-----------------------
+<VAL(x e), p, q> || <v, p'{x --> l(x')}, q'{l(x') --> v}> 
+
+b) 
+(val x 5)
+(define addX (y) (+ x y))
+(val x 10)
+(addX 1)
+---If addX returns 11, then the second call to val used SET to overwrite x
+   If addX returns 6, then the second call to val created a new binding
+
+c) I prefer the scheme semantics because it helps manage scoping issues. It is
+far more confusing to have multiple bindings of x than to have a single 
+binding that is updated. The new semantics actually cause a memory leak as the
+old location mapped to by x is lost when the new binding is instantiated. 
+An easier solution would be to use new variables.

@@ -1,0 +1,10 @@
+#ifndef TrigInfo
+#define TrigInfo
+
+struct TrigInfOMG_I_Cant_believe_this_has_to_be_different
+{
+    string Trig;
+    int counter;
+    int frequency;
+};
+#endif

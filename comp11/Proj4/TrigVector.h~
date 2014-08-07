@@ -1,0 +1,37 @@
+#ifndef TrigVectorCLS
+#define TrigVectorCLS
+#include "TrigInfoSTR.h"
+
+
+
+class TrigVector
+{
+
+public:
+
+    TrigVector();
+    string language;//for identification
+    string fName;//name of associated file (to be read in)
+
+    TrigInfo* trigList;//array for trigrams/counters/frequencies
+    int trigSize;//size of that array
+  
+
+    string readFile();//reads in file, cleans it and returns 'text'
+    string text;//edited, ready-to-trigram text
+   
+
+    int Trigrammer();//reads 'text' and creates associated trigrams, returns #
+    int numberTrigs;//# of trigrams for document
+
+    void frequelizer();//calculates and stores frequency for all trigrams in trigList
+
+private:
+
+  
+ string cleanUp();
+    
+  
+
+};
+#endif

@@ -1,0 +1,30 @@
+digraph calc {
+    rotate=90;
+    size="11,8.5";
+    ratio=compress;
+    
+    waiting [label="waiting\nfor input", peripheries=2]
+    entering [label="entering\na number"]
+
+waiting -> waiting [label="space or tab:\ndo nothing"]
+waiting -> entering [label="digit d:\npush d"]
+entering -> entering [label="digit d:\ntop := 10*top + d"]
+entering -> waiting [label="space or tab:\ndo nothing"]
+
+{ waiting entering } -> waiting [label="+, -, *, /, &, |, ~, c, s, d, p, z\n operate on stack"]
+{ waiting entering } -> waiting [label="newline:\nprint value stack"]
+/*
+{ waiting entering } -> waiting [label="~\n operate on stack"]
+{ waiting entering } -> waiting [label="c:\nchange sign of top value (NEG)"]
+{ waiting entering } -> waiting [label="s:\nswap top two values"]
+{ waiting entering } -> waiting [label="d:\nduplicate top value"]
+{ waiting entering } -> waiting [label="p:\npop value stack"]
+{ waiting entering } -> waiting [label="z:\nclear value stack"]
+
+       -      Pops  two values, subtracts the first one popped from the second
+              one popped, and pushes the result.
+
+*/
+
+
+}

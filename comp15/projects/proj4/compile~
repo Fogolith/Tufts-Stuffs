@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -Wall -Wextra hashfunc.cpp Song.cpp Word.cpp songSearch.cpp main.cpp -lrt

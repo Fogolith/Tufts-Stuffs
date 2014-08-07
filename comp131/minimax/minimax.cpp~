@@ -1,0 +1,82 @@
+int minimax(Board &theBoard, int depth) {
+	/*
+	 * in player.cpp in nextMove, bestMove = legalMoves[minimax(theBoard)] 
+	 * would not be calling this function if the game was over
+	 * if myDepth == 0 
+	 * 	
+	 * 	
+	 * 	if search depth is 0 why not return a random move?
+	 * 	where to store moves without overwriting legalMoves?
+	 *      what to return for win/loss? If heuristic is #moves,
+	 *      should win/loss be inf/-inf?
+	 */
+	int bestScore = -100000000; //using in place of -infinity
+	int chooseMove = 0;
+	int numMoves = legalMoves.size();
+	for(int i = 0; i < num_moves; i++) {
+		Board clone = theBoard;
+		clone.makeMove(legalMoves[i]);
+		int newScore = minValue(&clone, depth-1, myPiece);
+		if(newScore > bestScore) {
+			bestScore = newScore;
+			chooseMove = i;
+		}
+	}
+	return chooseMove;
+}
+
+int minValue(Board &theBoard, int depth, char piece) {
+	
+	char thisPiece;
+	if(piece == 'x') {
+		thisPiece = 'o'; 
+	} else {
+		thisPiece = 'x';
+	}
+	//findMoves(theBoard, thisPiece);
+	
+	int bestScore = 100000000; //using in place of +infinity
+	int chooseMove = 0;
+	int numMoves = //moves.size() ........
+	/* 
+	 * if numMoves.size() == 0   --> return WIN - GOOD!
+	 * if depth == 0    --> return numMoves.size() 
+	 */
+		
+	for(int i = 0; i < numMoves; i++) {
+		Board clone = theBoard;
+		clone.makeMove(//moves[i])
+		newScore = maxValue(&clone, depth-1, piece);
+		if(newScore < bestScore) {
+			bestScore = newScore;
+			chooseMove = i;
+		}
+	}
+	return bestScore; //minimax returns the move, this returns a VALUE
+}
+
+
+int maxValue(Board &theBoard, int depth, char piece) {
+	
+
+	//findMoves(theBoard, piece);
+	int bestScore = -100000000; //using in place of -infinity
+	int chooseMove = 0;
+	int numMoves = //moves.size() .........
+	/* 
+	 * if numMoves.size() == 0   --> return LOSS - BAD!
+	 * if depth == 0    --> return numMoves.size() 
+	 */
+		
+	for(int i = 0; i < numMoves; i++) {
+		Board clone = theBoard;
+		clone.makeMove(//moves[i])
+		newScore = minValue(&clone, depth-1);
+		if(newScore > bestScore) {
+			bestScore = newScore;
+			chooseMove = i;
+		}
+	}
+	return bestScore;
+}
+

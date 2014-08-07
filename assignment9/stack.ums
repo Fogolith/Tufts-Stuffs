@@ -1,0 +1,9 @@
+
+.zero r0
+.temps r6, r7
+.section data
+.space 10
+endstack:
+.section init
+r2 := endstack
+

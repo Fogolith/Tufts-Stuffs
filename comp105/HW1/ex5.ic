@@ -1,0 +1,13 @@
+;Jake Austin
+;HW1 ex5
+
+(define choose (n k) (if(< k 0) (print 0)
+                     (if(< n 0) (print 0)
+                     (if(= k 0) 1 
+                     (if(= n k) 1 
+                     (if(= n 0) 0
+                             (+ (choose (- n 1) k) 
+                                (choose (- n 1) (- k 1)))))))))
+
+;If either n or k is negative, print error. Handle base cases (return 1) 
+;choose 0 set to 0 (numbers theory debate)

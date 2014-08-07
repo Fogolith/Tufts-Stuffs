@@ -1,0 +1,62 @@
+.zero r0
+.temps r6, r7
+.section text
+
+printd:
+    r3 := m[r0][r2]
+    r5 := printneg
+    if (r0 >s r3) goto r5
+    r5 := printpos
+    if (r0 <s r3) goto r5
+    goto printzero
+
+printzero:
+    output '0'
+    goto r1
+
+printneg:
+    output '-'
+    r3 := -r3
+    pop stack r2
+    push r3 on stack r2
+    goto printpos
+
+printpos:
+    r5 := m[r0][r2]
+    pop stack r2
+    push r1 on stack r2
+    push r3 on stack r2
+    push r4 on stack r2
+    r3 := r5
+    goto mod linking r1
+    r3 := r3 - r1
+    r3 := r3 / 10
+    push r1 on stack r2
+    r1 := return
+    r5 := 1
+    if (r3 <s r5) goto r1
+    push r3 on stack r2
+    goto printpos
+
+return: 
+    r5 := m[r0][r2]
+    pop stack r2
+    r5 := r5 + '0'
+    output r5
+    r3 := m[r0][r2]
+    pop stack r2
+    r4 := m[r0][r2]
+    pop stack r2
+    r1 := m[r0][r2]
+    pop stack r2
+    goto r1
+
+mod:
+    r5 := r3 / 10
+    r5 := r5 * 10
+    r5 := r3 - r5
+    push r5 on stack r2
+    r5 := r1
+    pop r1 off stack r2
+    goto r5
+

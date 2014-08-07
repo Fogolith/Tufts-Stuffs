@@ -1,0 +1,26 @@
+(define mod (m n) (- m(* n(/ m n))))
+
+(define isPrime (n x) (if(> x (/ n 2)) 1 
+                      (if(= 0 (mod n x)) 0 
+                              (isPrime n (+ x 1)))))
+
+(define prime? (n) (isPrime n 2))
+;works for +, not for -
+
+(define findNth (x n) (if(= n 1) x 
+                      (if(prime? (+ x 1)) (findNth (+ x 1) (- n 1)) 
+                                          (findNth (+ x 1) n))))
+
+(define nthprime (n) (if(< n 0) (print 0)
+                     (if(= n 1) 2 (findNth 2 n))))
+;what to do if n < 1 - print 0
+
+(define sumprimes (n) (if(= n 0) 0 (+ (nthprime n) (sumprimes (- n 1)))))
+;appears good
+
+(define gcd (m n) (if(= n 0) m (gcd n (mod m n))))
+(define relprime? (m n) (if(< m 0) (print 0)
+                        (if(< n 0) (print 0)
+                        (if(= 1 (gcd m n)) 1 0))))
+;appears good if both numbers are positive
+;what do with negative divisor - print 0

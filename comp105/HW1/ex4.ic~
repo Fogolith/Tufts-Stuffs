@@ -1,0 +1,8 @@
+(define exp (m n) (if(= n 0) 1 
+                  (if(< n 0) 0 
+                     (* m (exp m (- n 1))))))
+
+(define log (m n) (if(< n m) 0 (+ 1(log m (/ n m)))))
+
+;check log for division behavior --- looks ok to start but rounds down obvi
+;what do if log is passed negatives (behavior undefined ok)

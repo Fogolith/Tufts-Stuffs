@@ -1,0 +1,23 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+class Animal
+{
+public:
+    Animal(string a, int values[]);
+
+    string getName();
+
+    int getTrait(int a);
+
+private:
+
+    string name;
+    int traits[16];
+
+};

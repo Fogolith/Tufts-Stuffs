@@ -1,0 +1,100 @@
+% need parent (mother/father?), man, woman, spouse?
+
+% facts
+
+man(george).
+man(philip).
+man(spencer).
+man(charles).
+man(mark).
+man(andrew).
+man(edward).
+man(william).
+man(harry).
+man(peter).
+man(james).
+woman(mum).
+woman(kydd).
+woman(margaret).
+woman(elizabeth).
+woman(diana).
+woman(anne).
+woman(sarah).
+woman(sophie).
+woman(zara).
+woman(beatrice).
+woman(louise).
+woman(eugenie).
+parent(george, elizabeth).
+parent(mum, elizabeth).
+parent(george, margaret).
+parent(mum, margaret).
+spouse(mum, george).
+spouse(george, mum).
+parent(spencer, diana).
+parent(kydd, diana).
+spouse(spencer, kydd).
+spouse(kydd, spence).
+parent (elizabeth, anne).
+parent(elizabeth, charles).
+parent(elizabeth, andrew).
+parent(elizabeth, edward).
+parent(philip, anne).
+parent(philip, charles).
+parent(philip, andrew).
+parent(philip, edward).
+spouse(elizabeth, philip).
+spouse(philip, elizabeth).
+parent(diana, william).
+parent(diana, harry).
+parent(charles, william).
+parent(charles, harry).
+spouse(diana, charles).
+spouse(charles, diana).
+parent(anne, peter). 
+parent(anne, zara).
+parent(mark, peter).
+parent(mark, zara).
+spouse(anne, mark).
+spouse(mark, anne).
+parent(andrew, beatrice).
+parent(andrew, eugenie).
+parent(sarah, beatrice).
+parent(sarah, eugenie).
+spouse(andrew, sarah).
+spouse(sarah, andrew).
+parent(edward, louise).
+parent(edward, james).
+parent(sophie, louise).
+parent(sophie, james).
+spouse(edward, sophie).
+spouse(sophie, edward).
+
+% clauses
+
+grandchild(C, G) :- parent(X, C), parent(G, X).
+
+greatgrandparent(G, C) :- parent(X, C), parent(Y, X), parent(G, Y).
+
+ancestor(A, B) :- parent(A, B).
+ancestor(A, B) :- parent(X, B), ancestor(A, X).
+
+brother(B, A) :- man(B), parent(X, B), parent(X, A).
+
+sister(S, A) :- woman(S), parent(X, S), parent(X, A).
+
+daughter(D, P) :- woman(D), parent(P, D).
+
+son(S, P) :- man(S), parent(P, S).
+
+firstcousin(C, A) :- aunt(X, A), parent(X, C). 
+
+brotherinlaw(B, A) :- sister(X, A), spouse(X, B).
+
+sisterinlaw(S, A) :- brother(X, A), spouse(X, S).
+
+aunt(A, N) :- parent(X, N), sister(A, X).
+aunt(A, N) :- parent(X, N), sisterinlaw(A, X).
+
+uncle(U, N) :- parent(X, N), brother(U, X).
+uncle(U, N) :- parent(X, N), brotherinlaw(U, X).

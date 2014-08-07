@@ -1,0 +1,9 @@
+(define choose (n k) (if(< k 0) (print 0)
+                     (if(< n 0) (print 0)
+                     (if(= k 0) 1 
+                     (if(= n k) 1 
+                     (if(= n 0) 0
+                             (+ (choose (- n 1) k) (choose (- n 1) (- k 1)))))))))
+
+;what to do if n = 0???  -- currently set to 0
+;what to do if n or k is negative --- print 0

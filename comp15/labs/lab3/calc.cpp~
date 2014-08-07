@@ -1,0 +1,10 @@
+#include <stack>
+#include <iostream>
+#include <cctype>
+
+int main()
+{
+    double ans;
+    cout << "enter an expression: ";
+    ans=Calculate(cin);
+    cout << ans << endl;

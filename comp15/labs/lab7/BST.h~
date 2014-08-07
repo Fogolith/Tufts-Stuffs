@@ -1,0 +1,34 @@
+#include "Animal.h"
+
+
+struct Node
+{
+    Animal* animal; 
+    Node* left;
+    Node* right;
+    Node* parent;
+
+    Node(Animal* a){
+	parent=NULL;
+	left=NULL;
+	right=NULL;
+	animal=a;
+    }
+};
+
+class BST
+{
+
+public:
+
+    BST();
+    void load(vector<Animal>& a, int num);
+    void add(Animal* b);
+    void inorderPrint();
+
+private:
+
+    void inorderPrint(Node* a);
+    Node* root;
+
+};

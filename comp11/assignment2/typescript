@@ -1,0 +1,49 @@
+Script started on Mon Sep 26 16:00:21 2011
+~/Desktop/comp11/assignment2 > hostname
+sunfire32
+~/Desktop/comp11/assignment2 > who
+sdusha01 pts/0        Sep 26 15:09 (130.64.97.195)
+tedv     pts/1        Sep 26 14:32 (d212.bbn.com)
+ndaniels pts/2        Sep 24 00:07 (static-71-174-73-42.bstnma.fios.verizon.net)
+dliebe03 pts/3        Sep 26 15:15 (c-66-31-42-115.hsd1.ma.comcast.net)
+ccousi01 pts/4        Sep 26 15:18 (130.64.97.171)
+ndaniels pts/5        Sep 24 00:13 (static-71-174-73-42.bstnma.fios.verizon.net)
+tli03    pts/6        Sep 26 15:38 (130.64.145.102)
+hlin02   pts/7        Sep 26 15:28 (130.64.151.139)
+ndaniels pts/9        Sep 24 22:59 (static-71-174-73-42.bstnma.fios.verizon.net)
+ndaniels pts/10       Sep 25 23:01 (static-71-174-73-42.bstnma.fios.verizon.net)
+jausti01 pts/11       Sep 26 15:55 (130.64.179.25)
+efu01    pts/12       Sep 21 17:28 (nrahma-2702.eecs.tufts.edu)
+nsalk01  pts/13       Sep 26 15:49 (c-76-24-28-245.hsd1.ma.comcast.net)
+jausti01 pts/15       Sep 26 16:00
+jlee0a   pts/18       Sep 26 12:52 (130.64.177.212)
+~/Desktop/comp11/assignment2 > w
+ 16:00:33 up 9 days,  5:10, 15 users,  load average: 2.40, 0.90, 0.39
+USER     TTY      FROM              LOGIN@   IDLE   JCPU   PCPU WHAT
+sdusha01 pts/0    130.64.97.195    15:09   27:16   1.17s  0.92s vim design_doc.
+tedv     pts/1    d212.bbn.com     14:32   37.00s  6.54s  6.17s vim random.cpp
+ndaniels pts/2    static-71-174-73 Sat00   20:32m  1.58s  1.45s ssh dell13
+dliebe03 pts/3    c-66-31-42-115.h 15:15    2:15   1.40s  1.07s emacs birthday.
+ccousi01 pts/4    130.64.97.171    15:18   11:20   1.50s  1.25s emacs AirplaneL
+ndaniels pts/5    static-71-174-73 Sat00    1:35m  2.49s  2.38s ssh dell13
+tli03    pts/6    130.64.145.102   15:38   19:58   3.21s  2.96s emacs birthday.
+hlin02   pts/7    130.64.151.139   15:28    2:37   0.31s  0.31s -tcsh
+ndaniels pts/9    static-71-174-73 Sat22    1:39m 11.40s 11.29s ssh dell13
+ndaniels pts/10   static-71-174-73 Sun23   16:43m  0.54s  0.42s ssh titan
+jausti01 pts/11   130.64.179.25    15:55    0.00s  0.26s  0.00s script
+efu01    pts/12   nrahma-2702.eecs Wed17    4days  5:10   0.06s /bin/csh -f /us
+nsalk01  pts/13   c-76-24-28-245.h 15:49    2.00s  1.05s  0.80s emacs birthday.
+jausti01 pts/15   -                16:00    0.00s  0.14s  0.06s w
+jlee0a   pts/18   130.64.177.212   12:52    3:31   1.16s  0.77s emacs 9.1.cpp
+~/Desktop/comp11/assignment2 > pwd
+/h/jausti01/Desktop/comp11/assignment2
+~/Desktop/comp11/assignment2 > ls -1
+[00m[01;32ma.out[00m
+[00mans2-3.txt[00m
+[01;32mbirthday.cpp[00m
+[01;32mbirthday.cpp~[00m
+[00mtypescript[00m
+[m~/Desktop/comp11/assignment2 > exit
+exit
+
+Script done on Mon Sep 26 16:00:52 2011

@@ -1,0 +1,34 @@
+#include "TrigVector.h"
+#include "Language.h"
+
+class Analyzer
+{
+
+public:
+
+    Analyzer();
+
+ void run();
+
+
+
+   
+
+
+private:
+  
+     Language* langList;//array for different languages
+    int languageCount;//associated counter
+
+    TrigVector* unknowns;//array for unknown docs
+    int unknownCount;//associated counter
+    void readIn();//reads in master file, stores documents of the same 
+		  //language in appropriate index of language array 
+		  //stores unknowns in unknown array
+    void printResults();//yep
+    void process();//
+    int LSIZE;//size of language array
+    int USIZE;//size of unknown array
+    double compare(Language a, TrigVector b);//does the math (store results? cout?)
+
+};

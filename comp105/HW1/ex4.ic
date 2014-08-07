@@ -1,0 +1,10 @@
+;Jake Austin
+;HW 1 ex 4
+
+(define exp (m n) (if(= n 0) 1 
+                  (if(< n 0) 0                ;all fractions reduce to int 0
+                     (* m (exp m (- n 1))))))
+
+(define log (m n) (if(< n m) 0 (+ 1(log m (/ n m)))))
+
+;behavior for log of negative numbers and 0 left undefined 

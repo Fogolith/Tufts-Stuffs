@@ -1,0 +1,22 @@
+
+
+Class StringSet
+{
+public:
+//constructor 
+    StringSet();
+//produces a new set with intersection of a second set
+    StringSet produceIntersection(StringSet& other);
+//produces a new set with union of a second set
+    StringSet produceUnion(StringSet& other);
+//returns false if already present, otherwise adds new string to set
+    bool add(string a);
+
+
+private:
+
+    vector<strings> flavors;
+    string company;
+
+
+}

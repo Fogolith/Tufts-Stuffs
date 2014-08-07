@@ -1,0 +1,4 @@
+(define sigma (m n) (if(= n m) m (+ n(sigma m (- n 1)))))  
+
+;;If n = m return m, else add n and call for n-1
+;;adds integers from n to m

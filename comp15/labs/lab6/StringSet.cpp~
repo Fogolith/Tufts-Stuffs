@@ -1,0 +1,23 @@
+#include "StringSet.h"
+
+StringSet::StringSet()
+{
+
+
+}
+
+StringSet StringSet::produceIntersection(StringSet& other)
+{
+
+
+}
+
+StringSet StringSet::produceUnion(StringSet& other)
+{
+
+}
+
+bool StringSet::add(string a)
+{
+
+}

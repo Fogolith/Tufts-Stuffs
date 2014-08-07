@@ -1,0 +1,89 @@
+(* Jake Austin, Comp 105 HW4: ML1 *)
+
+(* compound: recursively applies binary operator f to x N times *)
+fun compound (op f, N, x) = if N>=1 then op f(x, compound(op f, N-1, x)) 
+				    else x;
+
+(* exp: Using compound with multiplication, exp calculates x^y *)
+fun exp x y = if y=0 then 1 else compound(op *, y-1, x);
+
+(* fib: recursively calculates fibonacci number of input, defined for n>=0 *)
+fun fib 0 = 0
+  | fib 1 = 1
+  | fib n = fib(n-1)+fib(n-2);
+
+(* rev: Using foldl, rev takes a list and returns the reversed list *)
+fun rev nil = nil
+  | rev x = foldl op:: nil x;
+
+(* minlist: Using foldl, minlist returns the smallest value in an int list *)
+fun minlist (x::xs) = foldl (fn(a, b)=> if a<=b then a else b) x xs
+  | minlist [] = raise Empty;
+
+(* myfoldl: Revursive implementation of foldl *)
+fun myfoldl f x [] = x
+  | myfoldl f x (y::ys) = myfoldl f (f(y, x)) ys;
+
+(* myfoldr: Recursive implementation of foldr *)
+fun myfoldr f x [] = x
+  | myfoldr f x (y::ys) = f(y, (myfoldr f x ys));
+
+(* zip: Given 2 lists of even length, recursively makes list of tuples  *)
+(*      returns nil in any case where the lists are not equal in length *)
+fun zip (x::xs) (y::ys) = (x, y)::(zip xs ys)
+  | zip _ _ = [];
+
+(* unzip: Given list of pair tuples, recursively splits tuples into 2 lists *)
+fun unzip [] = ([], [])
+  | unzip ((x, y)::zs) = let val (xs, ys) = unzip zs in (x::xs, y::ys) end;
+
+(* flatten: Given a list of lists, recursively generates 1d list with all  *)
+(*          elements.                                                      *)
+fun flatten [] = []
+  | flatten [x] = x
+  | flatten (x::xs) = x @ flatten xs;
+
+
+(* mynth: Given a non-negative integer and a list, recursively iterates *)
+(*        through list and returns nth element.                         *)
+fun mynth x (y::[]) = if x=0 then y else raise Domain
+  | mynth x (y::ys) = if x<0 then raise Domain 
+                      else if x=0 then y else mynth (x-1) ys
+  | mynth x [] = raise Empty;
+
+
+
+type 'a env = (string * 'a) list
+
+val emptyEnv = [];
+
+fun bindVar (x:string, y, env) = (x, y)::env;
+
+fun isBound (x:string, []) = false
+  | isBound (x:string, ((y , z)::zs)) = if x=y then true
+			                else isBound (x, zs); 
+
+exception NotFound;
+
+fun lookup (x:string, []) = raise NotFound
+  | lookup (x:string, ((y, z)::zs)) = if x=y then z
+				      else lookup (x, zs);
+
+fun extendEnv (xs, ys, env) = 
+let fun pairfold f z ([], []) = z
+      | pairfold f z (x::xs, y::ys) = f (x, y, pairfold f z (xs, ys))
+      | pairfold _ _ _ = raise Match;
+in
+pairfold bindVar env (xs, ys) end;
+
+type 'a env2 = string -> 'a
+
+fun emptyEnv2 (x:string) = raise NotFound;
+
+fun lookup2 (x:string, env2) = env2 x;
+
+ 
+
+fun bindVar2 (x:string, y, env2) = 
+             (fn z:string => if z=x then y else lookup2 (x, env2)); 
+

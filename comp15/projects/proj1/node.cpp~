@@ -1,0 +1,11 @@
+#include "node.h"
+
+Node* Node::getNext()
+{
+    return next;
+}
+
+void Node::setNext(Node* p)
+{
+    next=p;
+}

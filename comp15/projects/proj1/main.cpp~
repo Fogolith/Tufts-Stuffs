@@ -1,0 +1,32 @@
+#include "supermarket.h"
+
+int main()
+{
+    Supermarket* myStore=new Supermarket();
+
+    cout << "Enter Configuration (1-4): ";
+    int config;
+    cin >> config;
+
+    string fname;
+    cout << "Enter Customer file name: ";
+    cin >> fname;
+    cout << endl << endl;
+
+    myStore->load(fname);
+
+    if(config==1)
+	myStore->run_sim();
+    else if(config==2)
+	myStore->run_sim2();
+    else if(config==3)
+	myStore->run_sim3();
+    else if(config==4)
+	myStore->run_sim4();
+    else if((config<1)||(config>4))
+	cout <<"Invalid Configuration" << endl;
+    
+    return 0;
+}
+
+

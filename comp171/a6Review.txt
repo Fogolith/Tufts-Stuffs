@@ -1,0 +1,6 @@
+jausti01 slessa01 Comp171 HW6 4/11/2014
+
+For this assignment, Steve and I met to plan out our work. I handled updates to the HTML/CSS/JS code for the prototype and Steve wrote up the questionnaire 
+after we discussed what to add. We conducted the usability tests together so
+that we could discuss our observations immediately after. We wrote up our 
+conclusions together before submitting the assignment. 

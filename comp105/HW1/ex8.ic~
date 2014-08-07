@@ -1,0 +1,8 @@
+(define makeBin (m) (if(= m 0) 0 
+                    (+ (exp 10 (log 2 m)) (makeBin (- m (exp 2 (log 2 m)))))))
+
+(define binary (m) (if(= m 0) 0 
+                   (if(> m 0) (makeBin m) 
+                           (*(- 0 1)(makeBin (*(- 0 1) m))))))
+
+;doesn't work for inputs larger than 1023, less than -1023

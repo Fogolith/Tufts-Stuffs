@@ -1,0 +1,35 @@
+struct space
+{
+    int value;
+    char display;
+};
+
+const int p1value = 1;
+const int AIvalue =-1;
+const char p1display = 'R';
+const char AIdisplay = 'Y';
+const int p1CanWin=3;
+const int AICanWin=-3;
+const int p1win = 4;
+const int AIwin =-4;
+
+
+string compName="computer";
+space Board[7][7];
+int spaceCount=42;	  //number of playable spaces on board
+
+class Connect4
+{
+public:
+//Constructor that sets gameboard values/displays to 0/" ", sets bottom row
+    Connect4();
+//a function gamePlay that manages turns and checks for wins/draws
+    void gamePlay();
+
+private:
+//string for computer name
+    string compName="computer";
+//int that tracks number of available board spaces
+    int spaceCount=42;
+//array of arrays of struct space for the gameboard
+    space Board[7][7];

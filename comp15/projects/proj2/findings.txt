@@ -1,0 +1,23 @@
+Jake Austin
+Project 2 Findings
+
+a)Because some non-terminals may genererate themselves (Noun Adj Noun or NP 
+Prep NP), probability dictates that every so often a very long sentence will 
+be generated based on which rules are chosen, considering that rules are 
+selected at random. If NP produces "Prep NP" several times and then produces 
+"Det Noun",and Noun produces "Adj Noun" multiple times, a sentence with 
+multiple prepositions, adjectives and nouns may be created (e.g. the professor 
+under the bathtub with the bathtub under every dog in every boring sandwich..).
+
+b)In my design, each terminal added to a non-terminals vector of words creates
+a new "words" rule -- a rule that dictates the return of a random word. The 
+greater the number of nouns in any given grammar, the less likely that
+an adjective will be placed in front of a noun, exponentially reducing the 
+chances that multiple adjectives will be produced in sequence. 
+ 
+c)In my program, if the same rule is entered multiple times for some non
+terminal it will be stored multiple times. Likewise, if the same terminal is 
+added multiple times it will be stored multiple times, increacing its chances 
+of being selected at random. In this way, the relative frequencies of rules 
+entered should be reflected in sentence production. 
+

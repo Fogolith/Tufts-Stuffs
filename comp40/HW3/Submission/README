@@ -1,0 +1,56 @@
+Names: Michael Silverblatt and Jake Austin
+Date: 2/15/13
+Homework 3 README and Part E
+
+Part A:
+uarray2b.h
+We implemented a blocked two dimensional unboxed array. We represented it using
+a UArray_2 of UArray_T's, each holding pointers to data. The user can specify
+block size or use standard 64k blocks. The mapping function checks that it is 
+only calling the apply function on indices within the user-specified range, not
+the unused ones in the edge blocks. We use the uarray2.c and .h implemented by
+Jake and his partner. 
+See design doc for more details.
+
+Part B:
+A2Methods suite.
+We implemented A2plain.c which allows A2Methods to use the UArray2b structure.
+We wrote a series of functions that take the A2 methods and modify the 
+parameters so they fit with the UArray2 specifications. Pointers to our 
+functions are then put in a static struct that is exported and accessible by
+other files and progams.
+
+Part C:
+We implemented ppmtrans which supports pnm manipulation using either blocked
+or unblocked arrays as dictated by A2Methods. We have successfully implemented 
+rotate 0, rotate 90, rotate 180 and rotate 270 using -row-major, -col-major or 
+-block-major options. You may specify a file on the command line, or it will 
+read from stdin. 
+
+Part D:
+See ESTIMATES file.
+
+Part E:
+         row        col         block
+-------------------------------------------
+ 180     8.03       8.35        11.89
+-------------------------------------------
+ 90      5.98       10.09       11.73
+-------------------------------------------
+
+In our tests, row-major mapping performed consistently better than col and 
+block mapping. Col was also faster than block. We attributed this to the fact
+that our blocking algorithm has far more computations and comparisons than
+either row or column. The block scores for 90 and 180 being very similar fits
+with our prediction that they would have similar locality and amount of 
+computing for both reading the source and writing the destination image.
+Because row mapping has great locality for reading an image regardless of the
+transformation, we found that row is always better than row. 90 rotations using
+row were faster than 180 because when writing to the destination image there 
+are some cache hits, whereas there are no hits in 180. Column is slower because
+it gets very few cache hits when reading from the source. 90 degree rotations 
+with col are slower than 180 because there are no cache hits when writing to
+the destination and some for 180 rotations. 
+
+
+We spent approximately 35 hours on this assignment.

@@ -1,0 +1,49 @@
+//Jake Austin
+//Comp15
+//SongSearch
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <cstdlib>
+#include <fstream>
+#include <string>
+#include "hashfunc.h"
+using namespace std;
+
+//a uniqueWord is unique to the song, and has the number of occurances
+//as well as a vector of indecies in which it appears
+struct uniqueWord
+{
+    string word;
+    int num;
+    vector<int> indecies;
+};
+
+class song
+{
+private:
+
+    string artist;
+    string title;
+    vector<string> lyrics;
+
+public:
+   
+    vector<uniqueWord*> words;
+
+    //takes in search term, finds it in unique words vector
+    //prints lyric in context from indecies vector
+    void printLyrics(string search);
+
+    void setArtist(string a);
+    string getArtist();
+    void setTitle(string a);
+    string getTitle();
+
+    void addLyric(string a);
+    string getLyric(int a);
+    int getNumLyrics();
+
+    void printWord(string print);
+    void printLyrics(int index);
+};

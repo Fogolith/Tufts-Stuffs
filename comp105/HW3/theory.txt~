@@ -1,0 +1,26 @@
+Jake Austin, 105 Scheme I Thoery questions
+
+30)
+(length (simple-reverse xs)) = (length xs)
+
+Base case: assume that xs is nil
+
+ = {substitute simple-reverse}
+(length (if(null? '()) '() (append(simple-reverse (cdr '())(list1(car '()))))))
+ = {null-empty law}
+(length (if(#t '() (append(simple-reverse(cdr '())(list(car '())))))))
+ = {if-#t law}
+(length '())
+ ===
+(length xs) when xs is null
+
+Inductive step:
+
+(length (simple-reverse xs))    where xs = (cons z zs)
+ = {by assumption that x is not nil}
+(length (simple-reverse (cons z zs)))
+ = {substitute simple-reverse
+(length (if(null? (cons z zs)) '() (append(simple-reverse zs)(list1 z))))
+ = {if-#f law}
+(length (append(simple-reverse zs)(list1 z)))
+ = {

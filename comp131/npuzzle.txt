@@ -1,0 +1,351 @@
+#!/usr/bin/perl -w
+
+# Solve random n-puzzle instances using A* search
+# Author:  Anselm Blumer, Tufts University
+# Date: 6 February, 2011
+# Modified 30 January, 2013
+# Modified 5 February, 2014
+
+# Global variables
+# htype: type of heuristic
+# printflag: print solution if "s"
+# size:  puzzle is an n x n grid, with n = size
+# state:  rows of a puzzle instance concatenated into
+#     a 1-dimensional array, with 0 denoting the blank
+# blankLoc:  the position of the blank, to avoid searching, i.e.
+#     state[ blankLoc ] = 0
+# depth:  depth in the search tree
+# states: array that stores the states in the search tree
+#     "pred" points to the parent in the tree
+# stateIndex:  entry in the tree currently being accessed
+# PQ:  a min-heap priority queue for finding the best state
+#        to expand next
+# PQsize:  the number of entries currently in the queue
+# seen:  a hash to avoid expanding the same state twice
+
+our $htype = '2';
+our $printflag = 'n';
+our $size = 3;
+our @state;
+our $blankLoc;
+our $depth = 0;
+our @states;
+our $stateIndex;
+our @PQ = ();
+our $PQsize = 0;
+our %seen;
+
+sub HVal {
+   our $size;
+   our @state;
+   our $htype;
+
+if ( $htype eq 'n' ) { return 0; }
+my $count = 0;
+if ( $htype eq '1' ) {
+   for my $i (0..$size*$size-1) {
+      if ($state[$i] != $i) { $count++; }
+   }
+   return $count;
+}
+my $retval = 0;
+for $i (0..$size-1) {
+   for my $j (0..$size-1) {
+      my $tmp = $state[$count];
+      if ($tmp != 0) {
+         my $jj = $tmp%$size;
+         my $ii = int $tmp/$size;
+         $retval += abs( $i - $ii ) + abs($j - $jj);
+      }
+      $count++;
+   }
+}
+return $retval;
+}
+
+
+# PQInsert, PQRemove, and PQHeapify implement a min-heap
+# priority queue as given in the CLRS Algorithms book.
+# All communication is through globals, except the "value"
+# argument to PQInsert
+# The heap is implemented as an array of hashes, with fields
+# giving value, index into the "states" array, and location of blank
+
+sub PQInsert {
+   our @PQ;
+   our $PQsize;
+   our $blankLoc;
+   our @states;
+
+$PQsize++;
+$PQ[$PQsize] = {"val"=>$_[0]+$_[1], "depth"=>$_[1], "blankLoc"=>$blankLoc,
+                "state"=>(@states-1)};
+my $i = $PQsize;
+while ($i > 1) {
+   if ($PQ[$i]{"val"} >= $PQ[int($i/2)]{"val"}) { last; }
+   my $tmp = $PQ[$i];
+   $PQ[$i] = $PQ[int($i/2)];
+   $PQ[int($i/2)] = $tmp;
+   $i = int($i/2);
+}
+}
+
+sub PQRemove {
+   our @PQ;
+   our $PQsize;
+
+if ($PQsize > 1) {
+   $PQ[1] = $PQ[$PQsize];
+   $PQsize--;
+   PQHeapify(1);
+}
+else { $PQsize = 0; }
+}
+
+sub PQHeapify {
+   our @PQ;
+   our $PQsize;
+
+my ($i, $l, $r, $largest);
+$i = $_[0];
+$l = $i * 2;
+$r = $l + 1;
+if (($l <= $PQsize) && ($PQ[$l]{"val"} < $PQ[$i]{"val"}))
+   { $largest = $l; }
+   else { $largest = $i; }
+if (($r <= $PQsize) && ($PQ[$r]{"val"} < $PQ[$largest]{"val"}))
+   { $largest = $r; }
+if ( $largest != $i ) {
+   my $tmp = $PQ[$i];
+   $PQ[$i] = $PQ[$largest];
+   $PQ[$largest] = $tmp;
+   PQHeapify( $largest );
+}
+}
+
+# Init initializes the state to the "solved" state
+
+sub Init {
+   our $size;
+   our @state;
+   our $blankLoc;
+
+   our $depth;
+   our @states;
+   our $stateIndex;
+   our @PQ;
+   our $PQsize;
+   our %seen;
+
+$depth = 0;
+@states = ();
+$stateIndex = 0;
+@PQ = ();
+$PQsize = 0;
+%seen = ();
+
+@state = (0..($size*$size-1));
+$blankLoc = 0;
+}
+
+# PrintState prints the current state as an n x n grid
+
+sub PrintState {
+   our $size;
+   our @state;
+
+my $count = 0;
+for my $i (1..$size) {
+   for my $j (1..$size) {
+       print $state[$count++];
+       print " ";
+   }
+   print "\n";
+}
+print "-----\n";
+}
+
+# GoalTest returns true if the current state is the
+# "solved" state, false otherwise
+
+sub GoalTest {
+   our $size;
+   our @state;
+
+for my $i (0..$size*$size-1) {
+   if ($state[$i] != $i) { return 0; }
+}
+return 1;
+}
+
+# Actions returns a list of the moves available
+# in the current state
+
+sub Actions {
+   our $size;
+   our $blankLoc;
+
+my @actionList = ();
+my $row = int ($blankLoc/$size);
+my $col = $blankLoc % $size;
+if ($row > 0) {
+   push @actionList, $blankLoc-$size;
+}
+if ($row < $size-1) {
+   push @actionList, $blankLoc+$size;
+}
+if ($col > 0) {
+   push @actionList, $blankLoc-1;
+}
+if ($col < $size-1) {
+   push @actionList, $blankLoc+1;
+}
+return @actionList;
+}
+
+# Slide implements one move, exchanging the
+# 0 (blank) with the position given by its argument
+
+sub Slide {
+   our @state;
+   our $blankLoc;
+
+$state[$blankLoc] = $state[$_[0]];
+$state[$_[0]] = 0;
+$blankLoc = $_[0];
+}
+
+# Scramble does a number of random moves specified
+# by its argument.  It would be better if it avoided moves
+# that undo the previous move.
+
+sub Scramble {
+   our @state;
+   our $blankLoc;
+
+$numSlides = $_[0];
+while ($numSlides > 0) {
+   my @poss = Actions();
+   my $actIndex = int rand @poss;
+   Slide( $poss[$actIndex] );
+   $numSlides--;
+}
+}
+
+# Expand adds children of the current node to the search tree
+# If any child is the "solved" state it returns immediately.
+# It uses the "seen" hash to avoid adding nodes already
+# in the tree.
+
+sub Expand {
+   our @state;
+   our $blankLoc;
+   our $depth;
+   our $stateIndex;
+   our %seen;
+
+my @poss = Actions();
+while (@poss) {
+   my $undo = $blankLoc;
+   Slide( pop @poss );
+   if (GoalTest()) { return 1; }
+   my $statestr = "@state";
+   if (exists $seen{$statestr})
+      { Slide( $undo ); }
+   else {
+      push @states, {"state"=>[ @state ], "pred"=>$stateIndex};
+      $seen{"@state"} = 1;
+      PQInsert( HVal(), $depth+1 );
+      Slide ( $undo );
+   }
+}
+return 0;
+}
+
+# Search for a solution
+
+sub Search {
+   our @state;
+   our $blankLoc;
+   our $depth;
+   our @PQ = ();
+   our $PQsize = 0;
+   our $printflag;
+
+if (GoalTest()) {
+   print "Starting at goal state\n";
+   exit;
+}
+$states[0] = {"state"=>[ @state ], "pred"=>-1};
+my $statestr = "@state";
+$seen{$statestr} = 1;
+PQInsert( HVal(), $depth );
+$stateIndex = 0;
+my $found = 0;
+while (!$found) {
+   if (!$PQsize) {
+      print "No solution\n";
+      exit 1;
+   }
+   $stateIndex = $PQ[1]{"state"};
+   for my $i (0..$size*$size-1) {
+      $state[$i] = $states[$stateIndex]{"state"}[$i];
+   }
+   $blankLoc = $PQ[1]{"blankLoc"};
+   $depth = $PQ[1]{"depth"};
+   PQRemove();
+   $found = Expand();
+   if ($found) {
+      print 0+@states, " nodes examined\n";
+      my $tempStateIndex = $stateIndex;
+      my $solutiondepth = 0;
+      while ($tempStateIndex >= 0) {
+         $tempStateIndex = $states[$tempStateIndex]{"pred"};
+         $solutiondepth++;
+      }
+      print "Solution at depth ", $solutiondepth, "\n";
+      if ( $printflag eq 's' ) {
+         print "Solution\n";
+         PrintState();
+         while ($stateIndex >= 0) {
+            for $i (0..$size*$size-1) {
+               $state[$i] = $states[$stateIndex]{"state"}[$i];
+               print $state[$i], " ";
+               if ( (($i+1)%$size) == 0 ) { print "\n"; }
+            }
+            print "-----\n";
+            $stateIndex = $states[$stateIndex]{"pred"};
+         }
+      }
+   } 
+} 
+} 
+
+# Main program
+   
+print "What type of heuristic: none (n), h1 (1), or h2 (2)? ";
+chomp($htype = <STDIN>);
+while ( ($htype ne 'n') && ($htype ne '1') && ($htype ne '2') ) {
+   print "Invalid type: ", $htype, "Try again: ";
+   chomp($htype = <STDIN>);
+}
+print "Enter n (for an n x n puzzle): ";
+chomp($size = <STDIN>);
+print "How many random moves? ";
+chomp($count = <STDIN>);
+$runcount = 1;
+print "Single run with solution (s), no solution (n), or multiple runs (m)? ";
+chomp($printflag = <STDIN>);
+if ($printflag eq 'm') {
+   $printflag = 'n';
+   print "How many runs? ";
+   chomp($runcount = <STDIN>);
+}
+while ($runcount > 0) {
+   Init();
+   Scramble( $count );
+   print "--- Starting configuration ---\n";
+   PrintState(); 
+   Search(); 
+   $runcount--;
+}
